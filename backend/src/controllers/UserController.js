@@ -1,11 +1,12 @@
 const db = require("../models");
+const { hash } = require("bcryptjs");
 
 module.exports = {
   async list_user(request, response) {
     try {
       const users = await db.User.findAll({
         attributes: {
-          exclude: ["is_active", "status"],
+          exclude: ["is_active", "status", "password"],
         },
         where: {
           is_active: true,
@@ -34,6 +35,7 @@ module.exports = {
   async create_user(request, response) {
     const {
       username,
+      email,
       password,
       wpp,
       dev,
@@ -47,11 +49,14 @@ module.exports = {
       created_at = date,
       updated_at = date;
 
+    const hashedPassword = await hash(password, 8);
+
     try {
       const user = await db.User.create({
         profile_image,
         username,
-        password,
+        email,
+        password: hashedPassword,
         wpp,
         dev,
         linkedin_username,
@@ -61,6 +66,8 @@ module.exports = {
         created_at,
         updated_at,
       });
+
+      delete user.password;
 
       return response.json({ message: "Sucesso", user });
     } catch (err) {
@@ -72,6 +79,7 @@ module.exports = {
     const {
       id,
       username,
+      email,
       senha,
       wpp,
       dev,
@@ -97,6 +105,7 @@ module.exports = {
           name,
           desc,
           username,
+          email,
           senha,
           wpp,
           dev,
@@ -113,7 +122,7 @@ module.exports = {
       );
 
       await user.setTechs(techs);
-
+      delete user.password;
       return response.json(user);
     } catch (err) {
       return response.status(400).json({ Error: err.message });
