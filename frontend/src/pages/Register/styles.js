@@ -11,6 +11,11 @@ export const Container = styled.div`
 
   flex: 1;
   background: #dcdcdd;
+
+  h2 {
+    font-size: 22px;
+    margin-top: 12px;
+  }
 `;
 
 export const Block = styled.div`
@@ -79,28 +84,8 @@ export const Content = styled.div`
   margin-left: 100px;
 
   form {
-    width: 400px;
+    /* width: 400px; */
     max-height: 650px;
     text-align: center;
   }
 `;
-
-export const DivRadio = styled.div`
-  display: block;
-  align-items: center;
-  align-content: center;
-
-  label {
-    margin-left: 35px;
-    margin-right: 35px;
-  }
-  h2 {
-    margin-bottom: 8px;
-    font-size: 24px;
-  }
-  span {
-    font-size: 20px;
-    padding: 5px;
-  }
-`;
-export const LabelRadio = styled.input``;

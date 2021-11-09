@@ -5,11 +5,22 @@ module.exports = {
     await queryInterface.bulkInsert(
       "techs",
       [
-        { name: "Node.js" },
-        { name: "React Native" },
-        { name: "PHP" },
-        { name: "React" },
+        { name: "C" },
+        { name: "JavaScript" },
+        { name: "React JS" },
+        { name: "C++" },
         { name: "C#" },
+        { name: "Node js" },
+        { name: "Python" },
+        { name: "Django" },
+        { name: "Flask" },
+        { name: "Java" },
+        { name: ".NET" },
+        { name: "MySQL" },
+        { name: "SQL Server" },
+        { name: "Ruby" },
+        { name: "GO" },
+        { name: "Delphi" },
       ],
       {}
     );

@@ -10,11 +10,10 @@ const auth = require("../config/auth");
 module.exports = {
   async authentication(request, response) {
     try {
-      const { userAuth, password } = request.body;
-
+      const { login, password } = request.body;
       const user = await db.User.findOne({
         where: {
-          [Op.or]: [{ username: userAuth }, { email: userAuth }],
+          [Op.or]: [{ username: login }, { email: login }],
         },
         raw: true,
       });

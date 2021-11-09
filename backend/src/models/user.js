@@ -29,7 +29,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       password: DataTypes.STRING,
       wpp: DataTypes.STRING,
-      dev: DataTypes.BOOLEAN,
       linkedin_username: {
         type: DataTypes.STRING,
         unique: true,
@@ -39,10 +38,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         unique: true,
       },
-      coordinates: DataTypes.GEOMETRY("POINT"),
       is_active: DataTypes.BOOLEAN,
       status: DataTypes.INTEGER,
       is_dev: DataTypes.BOOLEAN,
+      first_access: DataTypes.BOOLEAN,
       created_at: DataTypes.DATE,
       updated_at: DataTypes.DATE,
     },
@@ -56,6 +55,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.beforeCreate((user) => (user.id = uuidv4()));
   User.beforeCreate((user) => (user.is_active = true));
+  User.beforeCreate((user) => (user.first_access = true));
 
   return User;
 };

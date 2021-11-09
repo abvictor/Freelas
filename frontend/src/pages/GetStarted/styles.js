@@ -59,24 +59,45 @@ export const Content = styled.div`
   border-radius: 15px;
   padding: 25px;
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+  justify-content: center;
 
-  div {
-    margin-top: 12px;
-  }
-
-  textarea {
-    height: 220px;
-    width: 100%;
-    padding: 15px;
+  .basic-multi-select {
+    /* display: flex;
+    align-items: center; */
+    background: #fff;
     border-radius: 15px;
-    margin-top: 12px;
-    font-size: 22px;
-    line-height: 28px;
-    text-align: start;
-    resize: none;
-    border: none;
-    &::placeholder {
-      color: rgba(0, 0, 0, 0.8);
+    padding: 12px;
+    width: 100%;
+
+    color: #000;
+    border: 2px solid #fff;
+
+    input {
+      background: transparent;
+      color: black;
+      font-size: 18px;
+      padding-left: 10px;
+      border: 0;
+      border-left: 1px solid #000;
+      line-height: 30px;
+      width: 100%;
+
+      &::placeholder {
+        color: rgba(0, 0, 0, 0.8);
+      }
     }
+  }
+`;
+
+export const UserImg = styled.div`
+  height: 100%;
+  width: 100%;
+  img {
+    margin-bottom: 15px;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    object-fit: contain;
+    height: 215px;
+    width: 215px;
+    border-radius: 50%;
   }
 `;

@@ -1,5 +1,7 @@
 const db = require("../models");
 const { hash } = require("bcryptjs");
+const { Op } = require("sequelize");
+const DevSchema = require("../models/Dev");
 
 module.exports = {
   async list_user(request, response) {
@@ -52,7 +54,26 @@ module.exports = {
     const hashedPassword = await hash(password, 8);
 
     try {
-      const user = await db.User.create({
+      let user = await db.User.findOne({
+        where: {
+          [Op.or]: [
+            { username },
+            { email },
+            { linkedin_username },
+            { github_username },
+          ],
+          is_active: true,
+        },
+        raw: true,
+      });
+
+      if (user) {
+        throw new Error(
+          "Os campos username, email, linkedin e github devem ser únicos "
+        );
+      }
+
+      user = await db.User.create({
         profile_image,
         username,
         email,
@@ -71,7 +92,7 @@ module.exports = {
 
       return response.json({ message: "Sucesso", user });
     } catch (err) {
-      return response.json({ error: err + "!!" });
+      return response.status(202).json({ error: err.message });
     }
   },
 
@@ -89,6 +110,9 @@ module.exports = {
       desc,
       techs,
       status,
+      first_access,
+      longitude,
+      latitude,
     } = request.body;
 
     const updated_at = Date.now();
@@ -99,6 +123,16 @@ module.exports = {
       if (!user) {
         throw new Error("User not found.");
       }
+
+      const location = {
+        type: "Point",
+        coordinates: [longitude, latitude],
+      };
+
+      await DevSchema.create({
+        user_id: user.id,
+        location,
+      });
 
       await db.User.update(
         {
@@ -112,6 +146,7 @@ module.exports = {
           linkedin_username,
           github_username,
           status,
+          first_access,
           updated_at,
         },
         {
@@ -125,6 +160,7 @@ module.exports = {
       delete user.password;
       return response.json(user);
     } catch (err) {
+      console.log(err);
       return response.status(400).json({ Error: err.message });
     }
   },
